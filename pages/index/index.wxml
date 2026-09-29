@@ -1,0 +1,50 @@
+<view class="course-page">
+  <view class="page-header">
+    <text class="page-title">课程列表</text>
+    <text class="page-subtitle">浏览课程与评价</text>
+  </view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="state-box">
+    <text>正在加载课程…</text>
+  </view>
+
+  <!-- 加载失败 -->
+  <view wx:elif="{{errorMessage}}" class="state-box">
+    <text>{{errorMessage}}</text>
+    <button class="retry-button" bindtap="loadCourses">
+      重新加载
+    </button>
+  </view>
+
+  <!-- 加载成功 -->
+  <block wx:else>
+    <view class="list-summary">
+      共 {{courses.length}} 门课程
+    </view>
+
+    <view wx:if="{{courses.length === 0}}" class="state-box">
+      暂无可显示的课程
+    </view>
+
+    <view
+      wx:for="{{courses}}"
+      wx:key="id"
+      class="course-card"
+    >
+      <view class="card-top">
+        <text class="course-code">{{item.course_code}}</text>
+        <text class="course-credit">{{item.credit}} 学分</text>
+      </view>
+
+      <view class="course-name">{{item.course_name}}</view>
+
+      <view class="card-bottom">
+        <text class="course-score">{{item.scoreText}}</text>
+        <text class="review-count">
+          {{item.review_count}} 条评价
+        </text>
+      </view>
+    </view>
+  </block>
+</view>
